@@ -1,17 +1,22 @@
 # (c)2018 
 # author: Gafar Dzhemilov
 # telegram: @explozer
+# description: simple powerful slider based on JS without jQuery. Uses css transitions, JS 
+
 
 Getting started:
 	include CSS and JS
+```
 	<link rel="stylesheet" type="text/css" href="css/slider.css"> //style
 	<script defer src="https://use.fontawesome.com/releases/v5.0.4/js/all.js"></script> //font awesome 5 icons
 	<script src="js/hammer.min.js"></script> //swipe gestures library
 	<script src="js/slider.js"></script> //main js
+```
+
 
 
 Make markup. For example (classes are important):
-		<div>
+```		<div>
 			<div class="mySlider slideEffect">
 				<span class="left"><i class="fas fa-angle-left"></i></span>
 				<div class="slideInner">
@@ -35,3 +40,4 @@ Make markup. For example (classes are important):
 			</div>
 			<ul class="controls"></ul>
 		</div>
+```
