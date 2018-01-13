@@ -8,9 +8,9 @@ function lightSlider(interVar) {
 	var translate = 0;
 
 	// находим в ДОМ нужные элементы
-	var controls = qS(".controls");
-	var sliderDiv = qS(".mySlider");
-	var slideInner = qS(".slideInner");
+	var controls = qS(".controls"); //кнопки контроля
+	var sliderDiv = qS(".mySlider"); //родительский блок слайдера
+	var slideInner = qS(".slideInner"); 
 	var myNodeList = qSA(".slide");	
 
 	
@@ -39,12 +39,12 @@ function lightSlider(interVar) {
 	// функция слайдера
 	function mySlider() {		
 		if ( document.hasFocus() && sliderDiv.classList.contains("fadeEffect")) {
-			if (show>=listLength) {show = 0};
-			if (show<0) {show = listLength};
+			if (show>=listLength) {show = 0}; // если текущий слайд последний, обнуляем счётчик
+			if (show<0) {show = listLength}; // если счётчик слайдов отрицательный, чиним эту фигню
 
-			if (show<listLength) {
+			if (show<listLength) { //реагируем, только если счётчик слайдов имеет адекватное число
 				for (var i = 0; i < listLength; ++i) {
-				  var element = myNodeList[i];
+				  var element = myNodeList[i]; //
 				  var child = conChilds[i];
 				  element.style.position = "absolute";
 				  element.style.opacity = "0";
