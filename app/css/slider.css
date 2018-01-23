@@ -10,7 +10,7 @@
 .slideEffect .slideInner {
 	display: flex;
 	position: relative;
-	transition: all .5s ease-out;
+	transition: transform .5s ease-out;
 }
 
 .slideEffect .slide {
