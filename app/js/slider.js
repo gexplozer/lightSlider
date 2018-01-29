@@ -32,7 +32,7 @@ function lightSlider(interVar) {
 		    show = data.number;
 		    restartSlider();
 		});
-		newLi.setAttribute("DATA-NUMBER", i);
+		newLi.setAttribute("data-number", i);
   		controls.appendChild(newLi);
 	};
 	//находим все кнопочки контроля
