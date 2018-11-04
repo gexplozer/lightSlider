@@ -1,105 +1,74 @@
-if (qS(".mySlider")) document.addEventListener("DOMContentLoaded", lightSlider(2000));
+if (qS(".mySlider")) document.addEventListener("DOMContentLoaded", startSlider(1000));
 
-function lightSlider(interVar) {
-	// задаём дефолтные значения для счётчиков, отступов и т.п.
-	var show = 1,
-		translate = 0;
-
-	// находим в ДОМ нужные элементы
-	var controls = qS(".controls"), //кнопки контроля
-		sliderDiv = qS(".mySlider"), //родительский блок слайдера
-		slideInner = qS(".slideInner"),
-		myNodeList = qSA(".slide");
-
-
-	// пишем параметры в переменные
-	var slWidth = myNodeList[0].clientWidth,
-		listLength = myNodeList.length;
-
-	// автостарт функции слайдера с интервалом
-	interval = setInterval(mySlider, interVar);
+function startSlider(intervalTime) { // основное приложение
+	let current = translate = timer = 0, // базовые переменные
+			nodes = {
+				controls: qS(".controls"), //кнопки контроля
+				sliderDiv: qS(".mySlider"), //родительский блок слайдера
+				sliderInner: qS(".sliderInner"), // внутренний длинный блок
+				slides: qSA(".slide") // коллекция слайдов
+			},
+			slideWidth = nodes.sliderDiv.clientWidth, // приравниваем ширину слайда к ширине главного блока
+			count = nodes.slides.length; // количество слайдов
 
 	//Аппендим элемменты навигации прямо из скрипта без вёрстки
-	for (var i = 0; i < listLength; ++i) {
-		var newLi = document.createElement('span');
-		newLi.innerHTML = '<i class="fi" data-icon="circle"></i>';
-		newLi.addEventListener("click", function () {
-			data = this.dataset;
-			show = data.number;
+	for (let i = 0; i < count; ++i) {
+		let newEl = document.createElement('span');
+		newEl.innerHTML = '<i class="fas fa-circle"></i>';
+		newEl.addEventListener("click", function () {
+			current = this.dataset.number;
 			restartSlider();
 		});
-		newLi.setAttribute("data-number", i);
-		controls.appendChild(newLi);
-	};
-	//находим все кнопочки контроля
-	conChilds = controls.children;
-
-	// функция слайдера
-	function mySlider() {
-		if (document.hasFocus() && sliderDiv.classList.contains("fadeEffect")) {
-			if (show >= listLength) { show = 0 }; // если текущий слайд последний, обнуляем счётчик
-			if (show < 0) { show = listLength }; // если счётчик слайдов отрицательный, чиним эту фигню
-
-			if (show < listLength) { //реагируем, только если счётчик слайдов имеет адекватное число
-				for (var i = 0; i < listLength; ++i) {
-					var element = myNodeList[i],
-					child = conChilds[i];
-					element.style.position = "absolute";
-					element.style.opacity = "0";
-					child.style.color = "#999";
-				};
-				myNodeList[show].style.position = "relative";
-				myNodeList[show].style.opacity = "1";
-				conChilds[show].style.color = "#333";
-				show++;
-			};
-		};
-
-		if (document.hasFocus() && sliderDiv.classList.contains("slideEffect")) {
-			if (show >= listLength) { show = 0 };
-
-			translate = -1 * slWidth * show + "px";
-			slideInner.style.transform = "translateX(" + translate + ")";
-			firstClone = myNodeList[0].cloneNode(true);
-			for (var i = 0; i < listLength; ++i) {
-				var child = conChilds[i];
-				child.style.color = "#999";
-			};
-			conChilds[show].style.color = "#333";
-			show++;
-		};
+		newEl.setAttribute("data-number", i);
+		nodes.controls.appendChild(newEl);
 	};
 
-	function restartSlider() {
-		mySlider();
-		clearInterval(interval);
-		interval = setInterval(mySlider, interVar);
+	// замена слайда
+	function changeSlide() {
+		translate = -1 * slideWidth * current;
+		nodes.sliderInner.style.transform = `translateX(${translate}px)`;
+		selectDot();
 	}
 
+	// обновляем точки
+	function selectDot () {
+		[].forEach.call(nodes.controls.children, el => {
+			el.style.color = "#999";
+		});
+		nodes.controls.children[current].style.color = "#333";
+	}
 
-	//прокрутка кнопками вправо и влево
-	qS(".left").addEventListener("click", function () {
-		show -= 2;
-		if (show < 0) { show = listLength - 1 };
-		restartSlider();
-	});
-	qS(".right").addEventListener("click", function () {
-		if (show >= listLength) { show = 0 };
-		restartSlider();
-	});
+	// новый цикл приложения
+	function restartSlider() {
+		clearTimeout(timer);
+		changeSlide();
+		timer = setTimeout(moveForward, intervalTime);
+	}
 
-	/*
-	//прикручиваем свайпы влево и вправо
-	var hammertime = new Hammer(sliderDiv);
-	hammertime.on('swiperight', function (ev) {
-		show -= 2;
-		if (show < 0) { show = 0 };
+	// крутим слайдер назад
+	function moveBack() {
+		if (current >= 1) { current-- }
+		else if (current <= 0) { current = count - 1 };
 		restartSlider();
-	});
+	}
 
-	hammertime.on('swipeleft', function (ev) {
-		if (show == listLength) { return false };
+	// крутим слайдер вперёд
+	function moveForward() {
+		if (current >= count - 1) { current = 0 }
+		else if (current < count - 1) { current++ };
 		restartSlider();
-	});*/
-};
+	}
 
+	// кнопки прокрутки влево и вправо
+	qS(".left").addEventListener("click", moveBack);
+	qS(".right").addEventListener("click", moveForward);
+
+	// добавляем свайп влево и вправо для телефона
+	nodes.sliderDiv.addEventListener('swiperight', moveBack);
+	nodes.sliderDiv.addEventListener('swipeleft', moveForward);
+
+	// пауза при наведении курсора
+	nodes.sliderInner.addEventListener("mouseover", () => {clearTimeout(timer)});
+	nodes.sliderInner.addEventListener("mouseout", restartSlider);
+	moveForward(); // первый запуск слайдера
+}
