@@ -1,23 +1,40 @@
-.mySlider {
+:root {
+	--wrapperWidth: 1140px;
+}
+
+@media (max-width : 520px) {
+	:root {
+		--wrapperWidth: 320px !important;
+	}
+}
+
+.bigSlider {
 	display: block;
 	position: relative;
 	margin: 0 auto;
 	overflow: hidden;
-	width: 1140px;
+	width: var(--wrapperWidth);
 	max-width: 100%;
 }
 
-.slideEffect .sliderInner {
+.mySlider .sliderInner {
 	display: flex;
 	position: relative;
 	transition: transform .5s ease-out;
+	max-width: 100%;
 }
 
-.slideEffect .slide {
+.bigSlider .slide {
+	display: block;
 	position: relative;
+	width: var(--wrapperWidth);
+	max-width: 100%;
+	flex-shrink: 0;
 }
 
-.slide img {
+.bigSlider .slide img {
+	display: block;
+	width: 100%;
 }
 
 .fadeEffect .slide {
@@ -32,38 +49,35 @@
 	opacity: 1;
 }
 
-.controls {
+.mySlider + .controls {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+	cursor: pointer;
 	margin: 5px 0;
 	color: #999;
+	padding: 0;
 }
 
-.controls span {
+.mySlider + .controls span {
 	transition: all .3s ease-out;
 }
 
-.controls svg {
-	cursor: pointer;
+.mySlider + .controls svg {
 	margin: .3em;
-	width: .5em !important;
+	width: .7em !important;
 }
 
 .mySlider>.left, .mySlider>.right {
+	display: block;
 	position: absolute;
 	opacity: 0;
 	top: calc(50% - .5em);
 	z-index: 15;
 	font-size: 3em;
 	cursor: pointer;
-	width: 1em;
-	height: 1em;
 	transition: opacity .2s .1s ease-in-out;
-	border-radius: 50%;
-	background-color: rgba(255,255,255,.4);
 	color: #222;
-	text-align: center;
 }
 
 .mySlider:hover>.left, .mySlider:hover>.right {
@@ -74,10 +88,32 @@
   transform: translateY(2px);
 }
 
-.left {
-	left: 0;
+.mySlider .left {
+	left: 5px;
 }
 
-.right {
-	right: 0;
+.mySlider .right {
+	right: 5px;
+}
+
+/* Карусель товаров */
+.productsCarousel {
+	display: block;
+	position: relative;
+	margin: 0 auto;
+	overflow: hidden;
+	width: var(--wrapperWidth);
+	max-width: 100%;
+}
+
+.carouselsProduct {
+	display: block;
+	position: relative;
+	width: calc(100%/3);
+	flex-shrink: 0;
+}
+
+.carouselsProduct img {
+	display: block;
+	width: 100%;
 }

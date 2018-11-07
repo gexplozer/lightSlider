@@ -3,12 +3,14 @@
 
 
 var gulp        = require('gulp');
-	browserSync = require('browser-sync').create();
-	del         = require('del'); // Подключаем библиотеку для удаления файлов и папок
+		browserSync = require('browser-sync').create();
+		del         = require('del'); // Подключаем библиотеку для удаления файлов и папок
     imagemin    = require('gulp-imagemin'), // Подключаем библиотеку для работы с изображениями
     pngquant    = require('imagemin-pngquant'); // Подключаем библиотеку для работы с png
     cache       = require('gulp-cache'); // Подключаем библиотеку кеширования
-    cssnano 	= require('gulp-cssnano'); // Подключаем css минификатор
+		cssnano 	= require('gulp-cssnano'); // Подключаем css минификатор
+		uglify = require('gulp-uglify-es').default;
+		
 
 // Static server
 gulp.task('browser-sync', function() {
@@ -38,7 +40,8 @@ gulp.task('build', ['clean','img'], function() {
     .pipe(gulp.dest('dist/fonts'))
 
     var buildJs = gulp.src('app/js/**/*') // Переносим скрипты в продакшен
-    .pipe(gulp.dest('dist/js'))
+		.pipe(uglify())
+		.pipe(gulp.dest('dist/js'))
 
     var buildHtml = gulp.src('app/*.html') // Переносим HTML в продакшен
     .pipe(gulp.dest('dist'))

@@ -1,16 +1,1 @@
-// shortcut для document.querySelector (типа замена джиквери и всё такое)))
-const qS = function (el, box) { if (box) { if (box.querySelector(el)) return box.querySelector(el)} else {if (document.querySelector(el)) return document.querySelector(el)}};
-const qSA = function (el, box) {if (box) {if (box.querySelectorAll(el)) return box.querySelectorAll(el)} else {if (document.querySelectorAll(el)) return document.querySelectorAll(el)}};
-
-const fqSA = function (el, handler, box) { // box - коробка, внутри которой ищем чё надо
-	if (box) { if (box.querySelectorAll(el)) [].forEach.call(box.querySelectorAll(el), handler)}
-	else { if (document.querySelectorAll(el)) [].forEach.call(document.querySelectorAll(el), handler)}  
-}; // el - это селектор, по которому будем искать; handler - это функция, которую применяем к каждому найденному элементу
-
-const fClick = function (el, handler, box) {
-	let clickEvent = function (target) {
-		target.addEventListener("click", handler)
-	}
-	if (box) {if (box.querySelectorAll(el)) [].forEach.call(box.querySelectorAll(el), clickEvent)} // если указан box для поиска
-	else {if (document.querySelectorAll(el)) [].forEach.call(document.querySelectorAll(el), clickEvent)} // вешаем на все элементы документа
-};
+const qS=function(e,l){if(l){if(l.querySelector(e))return l.querySelector(e)}else if(document.querySelector(e))return document.querySelector(e)},qSA=function(e,l){if(l){if(l.querySelectorAll(e))return l.querySelectorAll(e)}else if(document.querySelectorAll(e))return document.querySelectorAll(e)},fqSA=function(e,l,r){r?r.querySelectorAll(e)&&[].forEach.call(r.querySelectorAll(e),l):document.querySelectorAll(e)&&[].forEach.call(document.querySelectorAll(e),l)},fClick=function(e,l,r){let c=function(e){e.addEventListener("click",l)};r?r.querySelectorAll(e)&&[].forEach.call(r.querySelectorAll(e),c):document.querySelectorAll(e)&&[].forEach.call(document.querySelectorAll(e),c)};

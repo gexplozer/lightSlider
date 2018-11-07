@@ -10,8 +10,8 @@
 		<h1>Карусель</h1>
 
 		<div>
-			<div class="mySlider slideEffect">
-				<span class="left"><i class="fas fa-angle-left"></i></span>
+			<div class="mySlider bigSlider slideEffect">
+				<span class="left"><i class="fas fa-chevron-circle-left"></i></span>
 
 				<div class="sliderInner">
 					<div class="slide">
@@ -35,18 +35,52 @@
 					</div>
 				</div>
 
-				<span class="right"><i class="fas fa-angle-right"></i></span>
+				<span class="right"><i class="fas fa-chevron-circle-right"></i></span>
 			</div>
 
 			<ul class="controls"></ul>
 		</div>
 
-		<span class="time"></span>
+		<section>
+			<div class="mySlider productsCarousel slideEffect">
+				<span class="left"><i class="fas fa-chevron-circle-left"></i></span>
+		
+				<div class="sliderInner carouselInner">
+					<div class="slide carouselsProduct">
+						<img src="https://via.placeholder.com/400x400.png?text=img01.png">
+					</div>
+		
+					<div class="slide carouselsProduct">
+						<img src="https://via.placeholder.com/400x400.png?text=img02.png">
+					</div>
+		
+					<div class="slide carouselsProduct">
+						<img src="https://via.placeholder.com/400x400.png?text=img03.png">
+					</div>
+		
+					<div class="slide carouselsProduct">
+						<img src="https://via.placeholder.com/400x400.png?text=img04.png">
+					</div>
+		
+					<div class="slide carouselsProduct">
+						<img src="https://via.placeholder.com/400x400.png?text=img05.png">
+					</div>
+				</div>
+		
+				<span class="right"><i class="fas fa-chevron-circle-right"></i></span>
+			</div>
+			<ul class="controls"></ul>
+		</section>
 
 		<script src="js/tocca.min.js"></script>
 		<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 		<script src="js/querySelectors.js"></script>
 		<script src="js/slider.js"></script>
+
+		<script>
+			const productsCarousel = new GafSlider({ target: ".productsCarousel", speed: 2000, dots: 1});
+			const imageSlider 		 = new GafSlider({target: ".bigSlider", speed: 1000, dots: 1});
+		</script>
 
 	</body>
 </html>
